@@ -1,4 +1,5 @@
 const { Schema, model } = require('mongoose');
+const moment = require('moment');
 
 const thoughtSchema = new Schema(
     {
@@ -60,7 +61,7 @@ thoughtSchema.virtual('reactionCount').get(function() {
 });
 
 function formatDate(timestamp) {
-    // Format the timestamp
+    return moment(timestamp).format('MM/DD/YYYY, h:mm:ss A');
 }
 
 module.exports = model('Thought', thoughtSchema);
