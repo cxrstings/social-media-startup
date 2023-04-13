@@ -1,6 +1,7 @@
 const express = require('express');
 const db = require('./config/connection');
 const routes = require('./routes');
+const seedDatabase = require('./utils/seed.js');
 
 const cwd = process.cwd();
 
@@ -16,3 +17,6 @@ db.once('open', () => {
     console.log(`API is running on port ${PORT}!`);
   });
 });
+
+// Seed the database
+seedDatabase();
