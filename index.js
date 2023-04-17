@@ -19,4 +19,4 @@ db.once('open', () => {
 });
 
 // Seed the database
-seedDatabase();
+// seedDatabase();

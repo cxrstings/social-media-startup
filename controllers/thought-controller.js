@@ -41,19 +41,22 @@ const thoughtController = {
   // create a new thought
   createThought({ body }, res) {
     Thought.create(body)
-      .then(({ _id }) => {
+      .then(dbThoughtData => {
         return User.findOneAndUpdate(
           { _id: body.userId },
-          { $push: { thoughts: _id } },
+          { $push: { thoughts: dbThoughtData._id } },
           { new: true }
-        );
+        ).populate({
+          path: 'thoughts',
+          select: '-__v'
+        });
       })
       .then(dbUserData => {
         if (!dbUserData) {
           res.status(404).json({ message: 'No user found with this id!' });
           return;
         }
-        res.json(dbUserData);
+        res.json(dbUserData.thoughts);
       })
       .catch(err => res.json(err));
   },
